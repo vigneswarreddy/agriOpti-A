@@ -2,11 +2,7 @@
 
 from flask import Flask, request, jsonify
 from flask_cors import CORS
-from crop_predict import predict_crop
-from predict_disease import predict_plant_disease
-from predict_yield import predict_crop_yield
-from predict_land import predict_aerial_land
-from predict_fertilizer import predict_fertilizer
+# ML modules are lazy-loaded inside routes to prevent memory limits on server boot
 
 app = Flask(__name__)
 CORS(app)  # Allow cross-origin requests from the React frontend
@@ -31,6 +27,7 @@ def predict():
     data = request.get_json()
 
     try:
+        from crop_predict import predict_crop
         crop = predict_crop(data)
 
         return jsonify({
@@ -61,6 +58,7 @@ def disease_predict():
         image_bytes = file.read()
         
         # Get prediction
+        from predict_disease import predict_plant_disease
         result = predict_plant_disease(image_bytes)
         
         return jsonify(result)
@@ -86,6 +84,7 @@ def yield_predict():
     print(f"[INFO] Payload Data: {data}")
 
     try:
+        from predict_yield import predict_crop_yield
         result = predict_crop_yield(data)
         print(f"[INFO] Prediction Result Generated: {result}")
         print(f"[INFO] --- END /predict-yield REQUEST ---\n")
@@ -117,6 +116,7 @@ def land_predict():
 
     try:
         image_bytes = file.read()
+        from predict_land import predict_aerial_land
         result = predict_aerial_land(image_bytes, lat, lon)
         return jsonify(result)
     except Exception as e:
@@ -139,6 +139,7 @@ def fertilizer_predict():
         return jsonify({"error": f"Missing fields: {', '.join(missing)}"}), 400
 
     try:
+        from predict_fertilizer import predict_fertilizer
         result = predict_fertilizer(data)
         return jsonify(result)
     except Exception as e:
