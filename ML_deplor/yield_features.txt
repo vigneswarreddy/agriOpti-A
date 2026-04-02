@@ -1,0 +1,10 @@
+rainfall
+temperature
+soil_ph
+fertilizer_used
+crop_type_Maize
+crop_type_Rice
+crop_type_Soybean
+crop_type_Wheat
+irrigation_type_Flood Irrigation
+irrigation_type_Sprinkler Irrigation
