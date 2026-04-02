@@ -1,0 +1,40 @@
+{
+  "model_type": "Improved Crop Classification CNN",
+  "architecture": "Deep Fully Connected with Feature Engineering",
+  "input_features": 13,
+  "output_classes": 4,
+  "selected_classes": {
+    "0": "wheat",
+    "1": "rye",
+    "2": "barley",
+    "7": "forage_crops"
+  },
+  "features_used": [
+    "Original bands: B4, B5, B8",
+    "Vegetation indices: NDVI, NDRE",
+    "Spectral ratios: SR, RE_ratio",
+    "Band differences: NIR_Red_diff, NIR_RE_diff, RE_Red_diff",
+    "Normalized bands: B4_norm, B5_norm, B8_norm"
+  ],
+  "training_params": {
+    "batch_size": 64,
+    "learning_rate": 0.001,
+    "num_epochs": 50,
+    "optimizer": "AdamW",
+    "scheduler": "CosineAnnealingWarmRestarts",
+    "label_smoothing": 0.1,
+    "gradient_clipping": 1.0
+  },
+  "final_metrics": {
+    "best_val_accuracy": 66.61849710982659,
+    "final_train_loss": 0.9871832118792967,
+    "final_val_loss": 0.9300515651702881
+  },
+  "improvements": [
+    "Feature engineering (13 features from 3 bands)",
+    "Class filtering (removed poor performers)",
+    "Label smoothing",
+    "Gradient clipping",
+    "Better optimizer and scheduler"
+  ]
+}
