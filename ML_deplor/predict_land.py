@@ -16,8 +16,6 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 MODEL_PATH = os.path.join(BASE_DIR, "models", "sentinel2", "best_improved_crop_classifier.pth")
 SCALER_PATH = os.path.join(BASE_DIR, "models", "sentinel2", "feature_scaler.pkl")
 
-WEATHER_API_KEY = "585c16e678fc74a01145af155437ec10"
-GEMINI_API_KEY = "AIzaSyDEC0IBLKaFLr0Znkbq_4kQPdWyuPWlkuo"
 
 # Initialize Gemini
 gemini_client = genai.Client(api_key=GEMINI_API_KEY)
