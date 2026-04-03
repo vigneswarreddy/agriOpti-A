@@ -1,6 +1,5 @@
+# Read the doc: https://huggingface.co/docs/hub/spaces-sdks-docker
 FROM python:3.10-slim
-
-WORKDIR /app
 
 # Install system dependencies needed for some ML libraries (like OpenCV if used, etc.)
 RUN apt-get update && apt-get install -y --no-install-recommends \
@@ -8,12 +7,19 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     libglib2.0-0 \
     && rm -rf /var/lib/apt/lists/*
 
+# Hugging Face requires running as a non-root user
+RUN useradd -m -u 1000 user
+USER user
+ENV PATH="/home/user/.local/bin:$PATH"
+
+WORKDIR /app
+
 # Copy the requirements file and install dependencies
-COPY requirements.txt .
+COPY --chown=user ./requirements.txt requirements.txt
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy the rest of the application files
-COPY . .
+COPY --chown=user . /app
 
 # Hugging Face Spaces expose port 7860
 ENV PORT=7860
